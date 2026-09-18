@@ -1,4 +1,4 @@
-const API_URL = "/api/tickets";
+const API_URL = "https://support-crm-system-6rbs.onrender.com/api/tickets";
 
 export async function getTickets(status = "", search = "") {
   const params = new URLSearchParams();
@@ -50,12 +50,20 @@ export async function createTicket(ticketData) {
 }
 
 export async function updateTicket(ticketId, ticketData) {
+  const payload = {
+    status: ticketData.status,
+  };
+
+  if (ticketData.notes && ticketData.notes.trim()) {
+    payload.notes = ticketData.notes.trim();
+  }
+
   const response = await fetch(`${API_URL}/${ticketId}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(ticketData),
+    body: JSON.stringify(payload),
   });
 
   if (!response.ok) {
