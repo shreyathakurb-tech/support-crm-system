@@ -1,17 +1,27 @@
 from datetime import datetime
 from typing import List, Literal, Optional
 
-from pydantic import BaseModel, ConfigDict, EmailStr, Field
+from pydantic import BaseModel, ConfigDict, EmailStr, Field, field_validator
 
 
 TicketStatus = Literal["Open", "In Progress", "Closed"]
 
 
-class TicketCreate(BaseModel):
-    customer_name: str = Field(..., min_length=2, max_length=100)
-    customer_email: EmailStr
-    subject: str = Field(..., min_length=3, max_length=200)
+class TicketCreate(BaseModel): 
+    customer_name: str = Field(..., min_length=2, max_length=100) 
+    customer_email: EmailStr 
+    subject: str = Field(..., min_length=3, max_length=200) 
     description: str = Field(..., min_length=10)
+
+    @field_validator("customer_email")
+    @classmethod
+    def validate_email_domain(cls, value):
+        email = str(value).lower()
+
+        if not email.endswith("@gmail.com"):
+            raise ValueError("Please enter a valid Gmail address.")
+
+        return value
 
 
 class TicketCreateResponse(BaseModel):
