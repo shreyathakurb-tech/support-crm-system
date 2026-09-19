@@ -74,8 +74,39 @@ class TicketDetailResponse(BaseModel):
 
 
 class TicketUpdate(BaseModel):
+    customer_name: Optional[str] = Field(
+        None,
+        min_length=2,
+        max_length=100
+    )
+
+    customer_email: Optional[EmailStr] = None
+
+    subject: Optional[str] = Field(
+        None,
+        min_length=3,
+        max_length=200
+    )
+
+    description: Optional[str] = Field(
+        None,
+        min_length=10
+    )
+
     status: Optional[TicketStatus] = None
-    notes: Optional[str] = Field(None, min_length=1)
+
+    notes: Optional[str] = Field(
+        None,
+        min_length=1
+    )
+
+    @field_validator("customer_email")
+    @classmethod
+    def validate_update_email(cls, value):
+        if value is None:
+            return value
+
+        return validate_email_format(value)
 
 
 class TicketUpdateResponse(BaseModel):
@@ -85,7 +116,7 @@ class TicketUpdateResponse(BaseModel):
 def validate_email_format(value: str) -> str:
     value = str(value).strip().lower()
 
-    pattern = r"^[A-Za-z0-9.!#$%&'*+/=?^_`{|}~-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)+$"
+    pattern = r"^[A-Za-z0-9]+([._-][A-Za-z0-9]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)+$"
 
     if not re.fullmatch(pattern, value):
         raise ValueError(

@@ -23,15 +23,18 @@ function Register() {
   }
 
 function isValidEmail(email) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
+  const emailPattern =
+    /^[A-Za-z0-9]+([._-][A-Za-z0-9]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)+$/;
+
+  return emailPattern.test(email.trim());
 }
 
 async function handleSubmit(event) {
   event.preventDefault();
 
-  if (!isValidEmail(formData.email.trim())) {
+  if (!isValidEmail(formData.email)) {
     setError(
-      "Please enter a valid email address, such as name@example.com."
+      "Please enter a valid email address, for example name@example.com."
     );
     return;
   }
