@@ -1,7 +1,15 @@
 from datetime import datetime
 from typing import List, Literal, Optional
 
-from pydantic import BaseModel, ConfigDict, EmailStr, Field, field_validator
+import re
+
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    EmailStr,
+    Field,
+    field_validator,
+)
 
 
 TicketStatus = Literal["Open", "In Progress", "Closed"]
@@ -74,16 +82,38 @@ class TicketUpdateResponse(BaseModel):
     success: bool
     updated_at: datetime
 
+def validate_email_format(value: str) -> str:
+    value = str(value).strip().lower()
+
+    pattern = r"^[A-Za-z0-9.!#$%&'*+/=?^_`{|}~-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)+$"
+
+    if not re.fullmatch(pattern, value):
+        raise ValueError(
+            "Please enter a valid email address, such as name@example.com."
+        )
+
+    return value
+
+
 class RegisterRequest(BaseModel):
     name: str = Field(..., min_length=2, max_length=100)
     email: EmailStr
     password: str = Field(..., min_length=8, max_length=100)
+
+    @field_validator("email")
+    @classmethod
+    def validate_email(cls, value):
+        return validate_email_format(value)
 
 
 class LoginRequest(BaseModel):
     email: EmailStr
     password: str = Field(..., min_length=8, max_length=100)
 
+    @field_validator("email")
+    @classmethod
+    def validate_email(cls, value):
+        return validate_email_format(value)
 
 class AuthResponse(BaseModel):
     access_token: str

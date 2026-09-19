@@ -18,6 +18,8 @@
   justify-content: space-between;
 }
 
+/* Logo */
+
 .brand {
   display: flex;
   align-items: center;
@@ -47,7 +49,10 @@
 .brand-name {
   font-size: 21px;
   font-weight: 700;
+  letter-spacing: -0.4px;
 }
+
+/* Navigation */
 
 .navbar {
   display: flex;
@@ -57,6 +62,7 @@
 
 .nav-link {
   padding: 9px 14px;
+
   border-radius: 8px;
 
   text-decoration: none;
@@ -64,6 +70,10 @@
 
   font-size: 14px;
   font-weight: 500;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
 }
 
 .nav-link:hover {
@@ -78,11 +88,20 @@
 }
 
 .nav-link.disabled {
-  opacity: 0.55;
   cursor: default;
+  opacity: 0.55;
 }
 
+.nav-link.disabled:hover {
+  background: transparent;
+  color: #6b7280;
+}
+
+/* Login */
+
 .login-button {
+  margin-left: 8px;
+
   background: #2563eb;
   color: #ffffff;
 
@@ -95,44 +114,184 @@
 
   text-decoration: none;
 
-  transition: background-color 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    transform 0.15s ease;
 }
 
 .login-button:hover {
   background: #1d4ed8;
+  transform: translateY(-1px);
 }
 
-.user-menu {
+/* Profile */
+
+.profile-container {
+  position: relative;
+  margin-left: 8px;
+}
+
+.profile-avatar {
+  width: 40px;
+  height: 40px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: #2563eb;
+  color: #ffffff;
+
   display: flex;
   align-items: center;
-  gap: 14px;
+  justify-content: center;
+
+  font-size: 15px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.15s ease;
 }
 
-.user-info {
+.profile-avatar:hover {
+  background: #1d4ed8;
+  transform: scale(1.04);
+}
+
+/* Dropdown */
+
+.profile-dropdown {
+  position: absolute;
+
+  top: calc(100% + 12px);
+  right: 0;
+
+  width: 290px;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+
+  box-shadow:
+    0 12px 30px rgba(15, 23, 42, 0.12),
+    0 4px 10px rgba(15, 23, 42, 0.06);
+
+  overflow: hidden;
+
+  animation: profileDropdown 0.15s ease;
+}
+
+@keyframes profileDropdown {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Dropdown header */
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 18px;
+}
+
+.profile-avatar.large {
+  flex-shrink: 0;
+
+  width: 46px;
+  height: 46px;
+
+  font-size: 17px;
+
+  cursor: default;
+}
+
+.profile-avatar.large:hover {
+  transform: none;
+}
+
+.profile-user-info {
+  min-width: 0;
+
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  gap: 4px;
 }
 
-.user-name {
-  font-size: 14px;
-  font-weight: 600;
+.profile-user-info strong {
   color: #111827;
+
+  font-size: 14px;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.user-role {
-  font-size: 12px;
+.profile-user-info span {
   color: #64748b;
+
+  font-size: 12px;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Divider */
+
+.profile-divider {
+  height: 1px;
+  background: #e5e7eb;
+}
+
+/* Profile details */
+
+.profile-details {
+  padding: 14px 18px;
+}
+
+.profile-detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.profile-detail-row span {
+  color: #64748b;
+  font-size: 13px;
+}
+
+.profile-detail-row strong {
+  color: #111827;
+  font-size: 13px;
   text-transform: capitalize;
 }
 
-.logout-button {
-  border: 1px solid #d1d5db;
+/* Logout */
+
+.dropdown-logout {
+  width: 100%;
+
+  border: none;
   background: #ffffff;
 
-  padding: 9px 14px;
+  padding: 14px 18px;
 
-  border-radius: 8px;
+  text-align: left;
+
+  color: #dc2626;
 
   font-size: 14px;
   font-weight: 600;
@@ -142,11 +301,14 @@
   transition: background-color 0.2s ease;
 }
 
-.logout-button:hover {
-  background: #f3f4f6;
+.dropdown-logout:hover {
+  background: #fef2f2;
 }
 
-@media (max-width: 700px) {
+/* Responsive */
+
+@media (max-width: 650px) {
+
   .header-container {
     padding: 0 16px;
   }
@@ -155,12 +317,22 @@
     font-size: 18px;
   }
 
-  .nav-link {
-    display: none;
+  .brand-logo {
+    width: 34px;
+    height: 34px;
+    font-size: 18px;
   }
 
-  .user-name,
-  .user-role {
-    display: none;
+  .navbar {
+    gap: 2px;
+  }
+
+  .nav-link {
+    padding: 8px 9px;
+    font-size: 13px;
+  }
+
+  .profile-dropdown {
+    width: 260px;
   }
 }

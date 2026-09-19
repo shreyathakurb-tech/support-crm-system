@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./Header.css";
 
@@ -5,17 +6,49 @@ function Header() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const token = localStorage.getItem("resolvehub_token");
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
 
+  const profileRef = useRef(null);
+
+  const token = localStorage.getItem("resolvehub_token");
   const storedUser = localStorage.getItem("resolvehub_user");
 
-  const user = storedUser
-    ? JSON.parse(storedUser)
-    : null;
+  let user = null;
+
+  try {
+    user = storedUser ? JSON.parse(storedUser) : null;
+  } catch {
+    user = null;
+  }
+
+  const firstLetter =
+    user?.name?.trim()?.charAt(0)?.toUpperCase() || "U";
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (
+        profileRef.current &&
+        !profileRef.current.contains(event.target)
+      ) {
+        setIsProfileOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener(
+        "mousedown",
+        handleClickOutside
+      );
+    };
+  }, []);
 
   function handleLogout() {
     localStorage.removeItem("resolvehub_token");
     localStorage.removeItem("resolvehub_user");
+
+    setIsProfileOpen(false);
 
     navigate("/login");
   }
@@ -50,38 +83,77 @@ function Header() {
             AI Insights
           </span>
 
+          {/* Login / Profile */}
           {!token ? (
-            <Link
-              to="/login"
-              className="login-button"
-            >
+            <Link to="/login" className="login-button">
               Login
             </Link>
           ) : (
-            <div className="user-menu">
+            <div
+              className="profile-container"
+              ref={profileRef}
+            >
 
-              <div className="user-info">
-                <span className="user-name">
-                  {user?.name}
-                </span>
-
-                <span className="user-role">
-                  {user?.role}
-                </span>
-              </div>
-
+              {/* Profile Circle */}
               <button
-                className="logout-button"
-                onClick={handleLogout}
+                className="profile-avatar"
+                onClick={() =>
+                  setIsProfileOpen(
+                    (current) => !current
+                  )
+                }
+                aria-label="Open profile menu"
               >
-                Logout
+                {firstLetter}
               </button>
+
+              {/* Dropdown */}
+              {isProfileOpen && (
+                <div className="profile-dropdown">
+
+                  <div className="profile-header">
+
+                    <div className="profile-avatar large">
+                      {firstLetter}
+                    </div>
+
+                    <div className="profile-user-info">
+                      <strong>{user?.name}</strong>
+                      <span>{user?.email}</span>
+                    </div>
+
+                  </div>
+
+                  <div className="profile-divider"></div>
+
+                  <div className="profile-details">
+
+                    <div className="profile-detail-row">
+                      <span>Role</span>
+
+                      <strong>
+                        {user?.role || "Customer"}
+                      </strong>
+                    </div>
+
+                  </div>
+
+                  <div className="profile-divider"></div>
+
+                  <button
+                    className="dropdown-logout"
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </button>
+
+                </div>
+              )}
 
             </div>
           )}
 
         </nav>
-
       </div>
     </header>
   );

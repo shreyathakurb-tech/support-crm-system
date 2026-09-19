@@ -22,11 +22,22 @@ function Register() {
     }));
   }
 
-  async function handleSubmit(event) {
-    event.preventDefault();
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
+}
 
-    setError("");
-    setLoading(true);
+async function handleSubmit(event) {
+  event.preventDefault();
+
+  if (!isValidEmail(formData.email.trim())) {
+    setError(
+      "Please enter a valid email address, such as name@example.com."
+    );
+    return;
+  }
+
+  setError("");
+  setLoading(true);
 
     try {
       const response = await fetch(
