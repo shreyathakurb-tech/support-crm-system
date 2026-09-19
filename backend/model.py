@@ -1,3 +1,5 @@
+import hashlib
+import secrets
 from datetime import datetime, timedelta
 
 from sqlalchemy import (
@@ -17,6 +19,43 @@ from database import Base
 def india_time():
     return datetime.utcnow() + timedelta(hours=5, minutes=30)
 
+class User(Base):
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True, index=True)
+
+    name = Column(String, nullable=False)
+
+    email = Column(
+        String,
+        unique=True,
+        index=True,
+        nullable=False,
+    )
+
+    password_hash = Column(
+        String,
+        nullable=False,
+    )
+
+    role = Column(
+        String,
+        default="customer",
+        nullable=False,
+    )
+
+    created_at = Column(
+        DateTime,
+        default=india_time,
+        nullable=False,
+    )
+
+    __table_args__ = (
+        CheckConstraint(
+            "role IN ('customer', 'admin')",
+            name="valid_user_role",
+        ),
+    )
 
 class Ticket(Base):
     __tablename__ = "tickets"
