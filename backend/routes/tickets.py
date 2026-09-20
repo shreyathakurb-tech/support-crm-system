@@ -91,19 +91,44 @@ def update_ticket(
     ticket_data: TicketUpdate,
     db: Session = Depends(get_db),
 ):
-    ticket = db.query(Ticket).filter(Ticket.ticket_id == ticket_id).first()
+    ticket = (
+        db.query(Ticket)
+        .filter(Ticket.ticket_id == ticket_id)
+        .first()
+    )
 
     if ticket is None:
-        raise HTTPException(status_code=404, detail="Ticket not found")
+        raise HTTPException(
+            status_code=404,
+            detail="Ticket not found"
+        )
 
+    # Update ticket information
+    if ticket_data.customer_name is not None:
+        ticket.customer_name = ticket_data.customer_name.strip()
+
+    if ticket_data.customer_email is not None:
+        ticket.customer_email = str(
+            ticket_data.customer_email
+        ).strip().lower()
+
+    if ticket_data.subject is not None:
+        ticket.subject = ticket_data.subject.strip()
+
+    if ticket_data.description is not None:
+        ticket.description = ticket_data.description.strip()
+
+    # Update status
     if ticket_data.status is not None:
         ticket.status = ticket_data.status
 
+    # Add note
     if ticket_data.notes is not None and ticket_data.notes.strip():
         new_note = Note(
             ticket_id=ticket.ticket_id,
             note_text=ticket_data.notes.strip(),
         )
+
         db.add(new_note)
 
     db.commit()
