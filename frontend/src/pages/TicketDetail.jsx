@@ -9,6 +9,7 @@ function TicketDetail() {
   const [ticket, setTicket] = useState(null);
   const [status, setStatus] = useState("Open");
   const [note, setNote] = useState("");
+  const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
@@ -86,18 +87,30 @@ function TicketDetail() {
   return (
     <div className="page">
       <div className="page-header">
-        <div>
-          <h1>{ticket.subject}</h1>
+  <div>
+    <h1>{ticket.subject}</h1>
 
-          <p>
-            {ticket.ticket_id} · {ticket.customer_name}
-          </p>
-        </div>
+    <p>
+      {ticket.ticket_id} · {ticket.customer_name}
+    </p>
+  </div>
 
-        <Link className="secondary-button" to="/">
-          Back
-        </Link>
-      </div>
+  <div className="ticket-actions">
+    {!isEditing && (
+      <button
+        className="secondary-button"
+        type="button"
+        onClick={() => setIsEditing(true)}
+      >
+        Edit Ticket
+      </button>
+    )}
+
+    <Link className="secondary-button" to="/">
+      Back
+    </Link>
+  </div>
+</div>
 
       {error && <p className="error-message">{error}</p>}
 
