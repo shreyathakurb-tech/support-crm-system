@@ -1,4 +1,4 @@
-const API_URL = "https://support-crm-system-6rbs.onrender.com/api/tickets";
+const API_URL = "http://127.0.0.1:8000/api/tickets";
 
 export async function getTickets(status = "", search = "") {
   const params = new URLSearchParams();

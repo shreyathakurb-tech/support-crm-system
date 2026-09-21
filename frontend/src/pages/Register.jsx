@@ -44,7 +44,7 @@ async function handleSubmit(event) {
 
     try {
       const response = await fetch(
-        "https://support-crm-system-6rbs.onrender.com/api/auth/register",
+        "http://127.0.0.1:8000/api/auth/register",
         {
           method: "POST",
           headers: {
