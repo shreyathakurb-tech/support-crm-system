@@ -79,9 +79,14 @@ function Header() {
             Analytics
           </span>
 
-          <span className="nav-link disabled">
-            AI Insights
-          </span>
+          <Link
+  to="/ai"
+  className={`nav-link ${
+    location.pathname === "/ai" ? "active" : ""
+  }`}
+>
+  AI Insights
+</Link>
 
           {/* Login / Profile */}
           {!token ? (
