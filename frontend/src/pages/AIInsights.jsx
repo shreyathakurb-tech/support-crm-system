@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import "./AIInsights.css";
 
 const API_URL = "http://127.0.0.1:8000/api/ai/chat";
@@ -173,8 +175,14 @@ function AIInsights() {
 
                 <div className="message-content">
                   <div className="message-bubble">
-                    {message.text}
-                  </div>
+  {message.sender === "ai" ? (
+    <ReactMarkdown remarkPlugins={[remarkGfm]}>
+      {message.text}
+    </ReactMarkdown>
+  ) : (
+    message.text
+  )}
+</div>
 
                   <div className="message-meta">
                     <span>{formatTime(message.timestamp)}</span>
