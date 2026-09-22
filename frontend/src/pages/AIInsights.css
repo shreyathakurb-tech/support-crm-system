@@ -326,7 +326,8 @@
 /* AI response formatting */
 
 .message-bubble p {
-  margin: 0 0 10px;
+  margin: 0 0 6px;
+  line-height: 1.5;
 }
 
 .message-bubble p:last-child {
@@ -336,7 +337,7 @@
 .message-bubble h1,
 .message-bubble h2,
 .message-bubble h3 {
-  margin: 12px 0 8px;
+  margin: 8px 0 5px;
   color: #111827;
   line-height: 1.35;
 }
@@ -355,37 +356,17 @@
 
 .message-bubble ul,
 .message-bubble ol {
-  margin: 8px 0;
-  padding-left: 22px;
+  margin: 5px 0;
+  padding-left: 20px;
 }
 
 .message-bubble li {
-  margin-bottom: 5px;
+  margin-bottom: 3px;
+  line-height: 1.5;
 }
 
 .message-bubble strong {
   font-weight: 700;
-}
-
-.message-bubble code {
-  padding: 2px 5px;
-  border-radius: 4px;
-  background: #e2e8f0;
-  font-family: monospace;
-  font-size: 13px;
-}
-
-.message-bubble pre {
-  overflow-x: auto;
-  padding: 12px;
-  margin: 10px 0;
-  border-radius: 8px;
-  background: #e2e8f0;
-}
-
-.message-bubble pre code {
-  padding: 0;
-  background: transparent;
 }
 
 /* Markdown tables */
@@ -393,13 +374,13 @@
 .message-bubble table {
   width: 100%;
   border-collapse: collapse;
-  margin: 12px 0;
+  margin: 8px 0;
   font-size: 13px;
 }
 
 .message-bubble th,
 .message-bubble td {
-  padding: 8px 10px;
+  padding: 6px 8px;
   border: 1px solid #dbe2ea;
   text-align: left;
   vertical-align: top;
@@ -412,18 +393,4 @@
 
 .message-bubble tr:nth-child(even) td {
   background: #f8fafc;
-}
-
-/* Links */
-
-.message-bubble a {
-  color: #2563eb;
-  text-decoration: underline;
-}
-
-.message-bubble blockquote {
-  margin: 10px 0;
-  padding-left: 12px;
-  border-left: 3px solid #cbd5e1;
-  color: #64748b;
 }
