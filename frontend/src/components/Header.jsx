@@ -75,9 +75,16 @@ function Header() {
             Tickets
           </Link>
 
-          <span className="nav-link disabled">
-            Analytics
-          </span>
+          <Link
+  to="/analytics"
+  className={`nav-link ${
+    location.pathname === "/analytics"
+      ? "active"
+      : ""
+  }`}
+>
+  Analytics
+</Link>
 
           <Link
   to="/ai"

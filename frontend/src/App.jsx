@@ -7,6 +7,7 @@ import Register from "./pages/Register";
 import CreateTicket from "./pages/CreateTicket";
 import TicketDetail from "./pages/TicketDetail";
 import AIInsights from "./pages/AIInsights";
+import Analytics from "./pages/Analytics";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/analytics" element={<Analytics />} />
         <Route path="/create" element={<CreateTicket />} />
         <Route path="/tickets/:ticketId" element={<TicketDetail />} />
         <Route path="/ai" element={<AIInsights />} />
