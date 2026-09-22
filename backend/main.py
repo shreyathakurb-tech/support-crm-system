@@ -5,6 +5,7 @@ from database import Base, engine
 from routes.tickets import router as tickets_router
 from routes.auth import router as auth_router
 from routes.ai import router as ai_router
+from routes.analytics import router as analytics_router
 
 # Import models so SQLAlchemy knows which tables to create.
 import model
@@ -29,6 +30,7 @@ app.add_middleware(
 app.include_router(tickets_router)
 app.include_router(auth_router)
 app.include_router(ai_router)
+app.include_router(analytics_router)
 
 @app.get("/")
 def health_check():
