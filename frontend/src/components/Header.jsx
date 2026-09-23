@@ -8,6 +8,10 @@ function Header() {
 
   const [isProfileOpen, setIsProfileOpen] = useState(false);
 
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+  return localStorage.getItem("resolvehub_theme") === "dark";
+});
+
   const profileRef = useRef(null);
 
   const token = localStorage.getItem("resolvehub_token");
@@ -53,6 +57,25 @@ function Header() {
     navigate("/login");
   }
 
+  function handleThemeToggle() {
+  setIsDarkMode((current) => {
+    const nextTheme = current ? "light" : "dark";
+
+    localStorage.setItem("resolvehub_theme", nextTheme);
+
+    document.body.classList.toggle(
+      "dark-mode",
+      nextTheme === "dark"
+    );
+
+    return !current;
+  });
+}
+
+useEffect(() => {
+  document.body.classList.toggle("dark-mode", isDarkMode);
+}, [isDarkMode]);
+
   return (
     <header className="app-header">
       <div className="header-container">
@@ -94,6 +117,16 @@ function Header() {
 >
   AI Insights
 </Link>
+
+<button
+  className="theme-toggle"
+  type="button"
+  onClick={handleThemeToggle}
+  aria-label="Toggle theme"
+  title={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
+>
+  {isDarkMode ? "☀" : "☾"}
+</button>
 
           {/* Login / Profile */}
           {!token ? (

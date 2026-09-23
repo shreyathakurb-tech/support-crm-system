@@ -5,19 +5,27 @@
 body {
   margin: 0;
   min-height: 100vh;
+
   background:
     radial-gradient(
       circle at 0% 0%,
-      rgba(37, 99, 235, 0.06),
-      transparent 28%
+      rgba(37, 99, 235, 0.09),
+      transparent 30%
     ),
     radial-gradient(
-      circle at 100% 10%,
-      rgba(59, 130, 246, 0.04),
-      transparent 25%
+      circle at 100% 0%,
+      rgba(96, 165, 250, 0.07),
+      transparent 28%
     ),
-    #f8fafc;
+    linear-gradient(
+      180deg,
+      #eef4fb 0%,
+      #f5f8fc 45%,
+      #f8fafc 100%
+    );
+
   color: #172033;
+
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", sans-serif;
 }
@@ -407,4 +415,76 @@ form label {
   display: flex;
   align-items: center;
   gap: 14px;
+}
+
+/* =========================
+   Dark Theme
+========================= */
+
+body.dark-mode {
+  background:
+    radial-gradient(
+      circle at 0% 0%,
+      rgba(37, 99, 235, 0.12),
+      transparent 30%
+    ),
+    #0f172a;
+
+  color: #e5e7eb;
+}
+
+body.dark-mode .page-header h1 {
+  color: #f8fafc;
+}
+
+body.dark-mode .page-header p {
+  color: #94a3b8;
+}
+
+body.dark-mode .ticket-card,
+body.dark-mode .form-card,
+body.dark-mode .detail-card,
+body.dark-mode .message {
+  background: #111827;
+  border-color: #263244;
+}
+
+body.dark-mode .ticket-main h2 {
+  color: #f8fafc;
+}
+
+body.dark-mode .ticket-main p {
+  color: #94a3b8;
+}
+
+body.dark-mode .ticket-id {
+  color: #60a5fa;
+}
+
+body.dark-mode .search-input,
+body.dark-mode form input,
+body.dark-mode form select,
+body.dark-mode form textarea {
+  background: #111827;
+  color: #f8fafc;
+  border-color: #334155;
+}
+
+body.dark-mode .filter-tab {
+  background: #111827;
+  color: #e5e7eb;
+  border-color: #334155;
+}
+
+body.dark-mode .secondary-button {
+  background: #334155;
+  color: #f8fafc;
+}
+
+body.dark-mode .secondary-button:hover {
+  background: #475569;
+}
+
+body.dark-mode .note {
+  background: #1e293b;
 }
