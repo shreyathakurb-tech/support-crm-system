@@ -10,7 +10,15 @@ function TicketDetail() {
   const [status, setStatus] = useState("Open");
   const [note, setNote] = useState("");
   const [isEditing, setIsEditing] = useState(false);
-  const [loading, setLoading] = useState(true);
+
+const [editForm, setEditForm] = useState({
+  customer_name: "",
+  customer_email: "", 
+  subject: "",
+  description: "",
+});
+
+const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
 
@@ -30,8 +38,16 @@ function TicketDetail() {
       setError("");
 
       const data = await getTicket(ticketId);
-      setTicket(data);
-      setStatus(data.status);
+
+setTicket(data);
+setStatus(data.status);
+
+setEditForm({
+  customer_name: data.customer_name || "",
+  customer_email: data.customer_email || "",
+  subject: data.subject || "",
+  description: data.description || "",
+});
     } catch (err) {
       setError("Could not load ticket details.");
     } finally {
@@ -59,6 +75,36 @@ function TicketDetail() {
       setSaving(false);
     }
   }
+
+  async function handleEditSubmit(event) {
+  event.preventDefault();
+
+  try {
+    setSaving(true);
+    setError("");
+
+    await updateTicket(ticketId, editForm);
+
+    setIsEditing(false);
+
+    await loadTicket();
+  } catch (err) {
+    setError(
+      err.message || "Could not update ticket."
+    );
+  } finally {
+    setSaving(false);
+  }
+}
+
+function handleEditChange(event) {
+  const { name, value } = event.target;
+
+  setEditForm((previous) => ({
+    ...previous,
+    [name]: value,
+  }));
+}
 
   useEffect(() => {
     loadTicket();
@@ -149,6 +195,85 @@ function TicketDetail() {
 
         <p>{ticket.description}</p>
       </section>
+
+      {isEditing && (
+  <section className="detail-card">
+    <h2>Edit Ticket</h2>
+
+    <form onSubmit={handleEditSubmit}>
+
+      <label>
+        Customer Name
+
+        <input
+          type="text"
+          name="customer_name"
+          value={editForm.customer_name}
+          onChange={handleEditChange}
+          required
+        />
+      </label>
+
+      <label>
+        Customer Email
+
+        <input
+          type="email"
+          name="customer_email"
+          value={editForm.customer_email}
+          onChange={handleEditChange}
+          required
+        />
+      </label>
+
+      <label>
+        Subject
+
+        <input
+          type="text"
+          name="subject"
+          value={editForm.subject}
+          onChange={handleEditChange}
+          required
+        />
+      </label>
+
+      <label>
+        Description
+
+        <textarea
+          name="description"
+          value={editForm.description}
+          onChange={handleEditChange}
+          rows="6"
+          required
+        />
+      </label>
+
+      <div className="ticket-actions">
+
+        <button
+          className="primary-button"
+          type="submit"
+          disabled={saving}
+        >
+          {saving ? "Saving..." : "Save Changes"}
+        </button>
+
+        <button
+          className="secondary-button"
+          type="button"
+          onClick={() => setIsEditing(false)}
+          disabled={saving}
+        >
+          Cancel
+        </button>
+
+      </div>
+
+    </form>
+  </section>
+)}
 
       <section className="detail-card">
         <h2>Update Ticket</h2>

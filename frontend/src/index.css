@@ -359,3 +359,9 @@ form label {
   color: #2563eb;
   font-weight: 600;
 }
+
+.ticket-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}

@@ -50,9 +50,27 @@ export async function createTicket(ticketData) {
 }
 
 export async function updateTicket(ticketId, ticketData) {
-  const payload = {
-    status: ticketData.status,
-  };
+  const payload = {};
+
+  if (ticketData.customer_name !== undefined) {
+    payload.customer_name = ticketData.customer_name;
+  }
+
+  if (ticketData.customer_email !== undefined) {
+    payload.customer_email = ticketData.customer_email;
+  }
+
+  if (ticketData.subject !== undefined) {
+    payload.subject = ticketData.subject;
+  }
+
+  if (ticketData.description !== undefined) {
+    payload.description = ticketData.description;
+  }
+
+  if (ticketData.status !== undefined) {
+    payload.status = ticketData.status;
+  }
 
   if (ticketData.notes && ticketData.notes.trim()) {
     payload.notes = ticketData.notes.trim();
@@ -67,7 +85,11 @@ export async function updateTicket(ticketId, ticketData) {
   });
 
   if (!response.ok) {
-    throw new Error("Failed to update ticket");
+    const data = await response.json().catch(() => ({}));
+
+    throw new Error(
+      data.detail || "Failed to update ticket"
+    );
   }
 
   return response.json();
