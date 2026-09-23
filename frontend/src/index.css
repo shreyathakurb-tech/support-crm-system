@@ -488,3 +488,44 @@ body.dark-mode .secondary-button:hover {
 body.dark-mode .note {
   background: #1e293b;
 }
+
+/* =========================
+   Full Dark Theme Pages
+========================= */
+
+body.dark-mode .analytics-page {
+  background: #0f172a !important;
+  color: #e5e7eb;
+  min-height: calc(100vh - 72px);
+}
+
+body.dark-mode .analytics-page h1,
+body.dark-mode .analytics-page h2,
+body.dark-mode .analytics-page h3 {
+  color: #f8fafc;
+}
+
+body.dark-mode .analytics-page p {
+  color: #94a3b8;
+}
+
+body.dark-mode .ai-page {
+  background: #0f172a !important;
+  color: #e5e7eb;
+  min-height: calc(100vh - 72px);
+}
+
+body.dark-mode .ai-page h1,
+body.dark-mode .ai-page h2,
+body.dark-mode .ai-page h3 {
+  color: #f8fafc;
+}
+
+body.dark-mode .ai-page p {
+  color: #94a3b8;
+}
+
+body.dark-mode #root {
+  min-height: calc(100vh - 72px);
+  background: #0f172a;
+}

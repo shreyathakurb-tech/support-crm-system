@@ -293,3 +293,41 @@
     font-size: 26px;
   }
 }
+
+/* =========================
+   Dark Theme - Analytics
+========================= */
+
+body.dark-mode .analytics-page {
+  color: #e5e7eb;
+}
+
+body.dark-mode .analytics-page h1,
+body.dark-mode .analytics-page h2,
+body.dark-mode .analytics-page h3 {
+  color: #f8fafc;
+}
+
+body.dark-mode .analytics-page p {
+  color: #94a3b8;
+}
+
+body.dark-mode .analytics-card,
+body.dark-mode .kpi-card,
+body.dark-mode .chart-card,
+body.dark-mode .recent-tickets-card {
+  background: #111827;
+  border-color: #263244;
+  color: #e5e7eb;
+}
+
+body.dark-mode .kpi-card strong,
+body.dark-mode .analytics-card strong {
+  color: #f8fafc;
+}
+
+body.dark-mode .recent-ticket {
+  background: #1e293b;
+  border-color: #334155;
+  color: #e5e7eb;
+}

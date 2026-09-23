@@ -394,3 +394,117 @@
 .message-bubble tr:nth-child(even) td {
   background: #f8fafc;
 }
+
+/* =========================
+   Dark Theme - AI Insights
+========================= */
+
+body.dark-mode .ai-page,
+body.dark-mode .ai-insights-page {
+  color: #e5e7eb;
+}
+
+body.dark-mode .ai-page h1,
+body.dark-mode .ai-page h2,
+body.dark-mode .ai-page h3,
+body.dark-mode .ai-insights-page h1,
+body.dark-mode .ai-insights-page h2,
+body.dark-mode .ai-insights-page h3 {
+  color: #f8fafc;
+}
+
+body.dark-mode .ai-page p,
+body.dark-mode .ai-insights-page p {
+  color: #94a3b8;
+}
+
+/* Main AI container */
+
+body.dark-mode .ai-card,
+body.dark-mode .ai-chat-card,
+body.dark-mode .ai-container {
+  background: #111827;
+  border-color: #263244;
+  color: #e5e7eb;
+}
+
+/* Chat messages */
+
+body.dark-mode .user-message {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+body.dark-mode .ai-message {
+  background: #1e293b;
+  color: #e5e7eb;
+  border-color: #334155;
+}
+
+/* Input */
+
+body.dark-mode .ai-input,
+body.dark-mode .chat-input,
+body.dark-mode .ai-page textarea,
+body.dark-mode .ai-page input {
+  background: #111827;
+  color: #f8fafc;
+  border-color: #334155;
+}
+
+body.dark-mode .ai-input::placeholder,
+body.dark-mode .chat-input::placeholder,
+body.dark-mode .ai-page textarea::placeholder {
+  color: #64748b;
+}
+
+/* Buttons */
+
+body.dark-mode .ai-page .secondary-button {
+  background: #334155;
+  color: #f8fafc;
+}
+
+body.dark-mode .ai-page .secondary-button:hover {
+  background: #475569;
+}
+
+/* =========================
+   Compact AI Markdown
+========================= */
+
+.ai-message p {
+  margin: 4px 0;
+  line-height: 1.5;
+}
+
+.ai-message ol,
+.ai-message ul {
+  margin-top: 8px;
+  margin-bottom: 8px;
+  padding-left: 24px;
+}
+
+.ai-message li {
+  margin: 3px 0;
+  line-height: 1.5;
+}
+
+.ai-message li > p {
+  margin: 2px 0;
+}
+
+.ai-message h1,
+.ai-message h2,
+.ai-message h3 {
+  margin-top: 10px;
+  margin-bottom: 6px;
+}
+
+.ai-message strong {
+  font-weight: 700;
+}
+
+.ai-message blockquote {
+  margin: 8px 0;
+}
