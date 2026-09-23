@@ -5,8 +5,19 @@
 body {
   margin: 0;
   min-height: 100vh;
-  background: #f4f6f8;
-  color: #17202a;
+  background:
+    radial-gradient(
+      circle at 0% 0%,
+      rgba(37, 99, 235, 0.06),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 100% 10%,
+      rgba(59, 130, 246, 0.04),
+      transparent 25%
+    ),
+    #f8fafc;
+  color: #172033;
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", sans-serif;
 }
@@ -33,17 +44,21 @@ textarea {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 28px;
+  margin-bottom: 32px;
 }
 
 .page-header h1 {
   margin: 0;
-  font-size: 48px;
+  font-size: 46px;
+  font-weight: 750;
+  letter-spacing: -1.2px;
+  color: #111827;
 }
 
 .page-header p {
   color: #64748b;
-  margin-top: 8px;
+  margin-top: 10px;
+  font-size: 16px;
 }
 
 .primary-button,
@@ -58,10 +73,14 @@ textarea {
 .primary-button {
   background: #2563eb;
   color: white;
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.18);
+  transition: all 0.2s ease;
 }
 
 .primary-button:hover {
   background: #1d4ed8;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.22);
 }
 
 .secondary-button {
@@ -84,10 +103,12 @@ form input,
 form select,
 form textarea {
   width: 100%;
-  border: 1px solid #cbd5e1;
-  border-radius: 10px;
+  border: 1px solid #d7dee8;
+  border-radius: 12px;
   padding: 14px;
-  background: white;
+  background: rgba(255, 255, 255, 0.96);
+  color: #172033;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .search-input:focus,
@@ -96,6 +117,7 @@ form select:focus,
 form textarea:focus {
   outline: none;
   border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
 }
 
 .filter-tabs {
@@ -128,29 +150,37 @@ form textarea:focus {
   align-items: center;
   gap: 24px;
 
-  background: white;
-  border: 1px solid #dce2ea;
-  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid #dfe5ed;
+  border-left: 4px solid #3b82f6;
+  border-radius: 14px;
 
-  padding: 20px;
+  padding: 24px 28px;
+
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04);
 
   transition: all 0.2s ease;
 }
 
 .ticket-card:hover {
-  border-color: #2563eb;
+  border-color: #cbd5e1;
+  border-left-color: #2563eb;
   transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(37, 99, 235, 0.12);
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.07);
 }
 
 .ticket-id {
   color: #2563eb;
   font-weight: 700;
-  margin-bottom: 8px;
+  font-size: 15px;
+  margin-bottom: 10px;
 }
 
 .ticket-main h2 {
-  margin: 0 0 8px;
+  margin: 0 0 10px;
+  font-size: 24px;
+  color: #111827;
+  letter-spacing: -0.3px;
 }
 
 .ticket-main p {
@@ -167,10 +197,16 @@ form textarea:focus {
   flex-direction: column;
   align-items: flex-end;
   gap: 10px;
+  min-width: 100px;
+}
+
+.ticket-meta small {
+  color: #64748b;
+  font-size: 14px;
 }
 
 .status-badge {
-  padding: 8px 14px;
+  padding: 8px 16px;
   border-radius: 999px;
   font-size: 14px;
   font-weight: 700;
@@ -256,6 +292,7 @@ form label {
   .page-header {
     flex-direction: column;
     align-items: flex-start;
+    gap: 20px;
   }
 
   .toolbar {
@@ -273,6 +310,12 @@ form label {
 
   .ticket-meta {
     align-items: flex-start;
+    width: 100%;
+  }
+
+  .ticket-actions {
+    flex-direction: column;
+    align-items: stretch;
   }
 
   .primary-button,
