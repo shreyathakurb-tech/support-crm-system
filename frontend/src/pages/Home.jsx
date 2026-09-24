@@ -72,6 +72,12 @@ function Home() {
           <h1>Support Tickets</h1>
           <p>Manage customer issues, statuses, and notes.</p>
         </div>
+
+        {token && (
+  <Link className="primary-button" to="/create">
+    Create Ticket
+  </Link>
+)}
       </div>
 
       <div className="toolbar">
@@ -95,10 +101,6 @@ function Home() {
        {!token ? (
         <div className="message">
           <p>Please log in to view and manage your support tickets.</p>
-
-          <Link className="primary-button" to="/login">
-            Log In
-          </Link>
         </div>
       ) : (
         <>
