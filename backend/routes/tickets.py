@@ -102,6 +102,7 @@ def list_tickets(
 
     return tickets
 
+
 @router.get("/{ticket_id}", response_model=TicketDetailResponse)
 def get_ticket(ticket_id: str, db: Session = Depends(get_db)):
     ticket = (
