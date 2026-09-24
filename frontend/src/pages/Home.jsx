@@ -10,34 +10,60 @@ function Home() {
   const [tickets, setTickets] = useState([]);
   const [status, setStatus] = useState("All");
   const [search, setSearch] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  const token = localStorage.getItem("resolvehub_token");
+
   async function loadTickets() {
-    try {
-      setLoading(true);
-      setError("");
+  const token = localStorage.getItem("resolvehub_token");
 
-      const data = await getTickets(status, search);
-
-      console.log("Tickets:", data);
-
-      setTickets(data);
-    } catch (err) {
-      console.error(err);
-      setError("Could not load tickets. Make sure the backend is running.");
-    } finally {
-      setLoading(false);
-    }
+  if (!token) {
+    setTickets([]);
+    setLoading(false);
+    setError("");
+    return;
   }
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      loadTickets();
-    }, 300);
+  try {
+    setLoading(true);
+    setError("");
 
-    return () => clearTimeout(timer);
-  }, [status, search]);
+    const data = await getTickets(status, search);
+
+    console.log("Tickets:", data);
+
+    setTickets(data);
+  } catch (err) {
+    console.error(err);
+
+    if (err.message === "Invalid or expired token") {
+      localStorage.removeItem("resolvehub_token");
+      localStorage.removeItem("resolvehub_user");
+      setError("Your session has expired. Please log in again.");
+    } else {
+      setError("Could not load tickets. Please try again.");
+    }
+  } finally {
+    setLoading(false);
+  }
+}
+
+  useEffect(() => {
+  const token = localStorage.getItem("resolvehub_token");
+
+  if (!token) {
+    setLoading(false);
+    setTickets([]);
+    return;
+  }
+
+  const timer = setTimeout(() => {
+    loadTickets();
+  }, 300);
+
+  return () => clearTimeout(timer);
+}, [status, search]);
 
   return (
     <div className="page">
@@ -47,9 +73,11 @@ function Home() {
           <p>Manage customer issues, statuses, and notes.</p>
         </div>
 
-        <Link className="primary-button" to="/create">
-          Create Ticket
-        </Link>
+        {token && (
+  <Link className="primary-button" to="/create">
+    Create Ticket
+  </Link>
+)}
       </div>
 
       <div className="toolbar">
@@ -70,11 +98,39 @@ function Home() {
         </p>
       )}
 
-      {error && (
-        <p className="error-message">
-          {error}
-        </p>
-      )}
+      {!token ? (
+  <div className="message">
+    <p>Please log in to view and manage your support tickets.</p>
+    <Link className="primary-button" to="/login">
+      Log In
+    </Link>
+  </div>
+) : (
+  <>
+    {error && (
+      <p className="error-message">
+        {error}
+      </p>
+    )}
+
+    {!loading && !error && tickets.length === 0 && (
+      <p className="message">
+        No tickets found.
+      </p>
+    )}
+
+    {!loading && !error && tickets.length > 0 && (
+      <div className="ticket-list">
+        {tickets.map((ticket) => (
+          <TicketCard
+            key={ticket.ticket_id}
+            ticket={ticket}
+          />
+        ))}
+      </div>
+    )}
+  </>
+)}
 
       {!loading &&
         !error &&
