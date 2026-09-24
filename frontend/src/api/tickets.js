@@ -1,5 +1,5 @@
-const API_URL = "http://127.0.0.1:8000/api/tickets";
-
+import { API_URL } from "./config";
+const TICKETS_API_URL = `${API_URL}/api/tickets`;
 export async function getTickets(status = "", search = "") {
   const params = new URLSearchParams();
 

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { API_URL } from "../api/config";
 
 function Login() {
   const navigate = useNavigate();
@@ -42,7 +43,7 @@ async function handleSubmit(event) {
   setLoading(true);
     try {
       const response = await fetch(
-        "http://127.0.0.1:8000/api/auth/login",
+        `${API_URL}/api/auth/login`,
         {
           method: "POST",
           headers: {

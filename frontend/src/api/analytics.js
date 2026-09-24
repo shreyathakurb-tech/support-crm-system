@@ -1,4 +1,5 @@
-const API_URL = "http://127.0.0.1:8000/api/analytics";
+import { API_URL } from "./config";
+const ANALYTICS_API_URL = `${API_URL}/api/analytics`;
 
 export async function getAnalyticsSummary() {
   const token = localStorage.getItem("resolvehub_token");
