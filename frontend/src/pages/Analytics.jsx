@@ -26,23 +26,29 @@ function Analytics() {
   );
 
   const isAdmin = user?.role === "admin";
+  const token = localStorage.getItem("resolvehub_token");
 
-  async function loadAnalytics() {
-    try {
-      setLoading(true);
-      setError("");
-
-      const result = await getAnalyticsSummary();
-
-      setData(result);
-    } catch (err) {
-      setError(
-        err.message || "Could not load analytics."
-      );
-    } finally {
-      setLoading(false);
-    }
+async function loadAnalytics() {
+  if (!token) {
+    setLoading(false);
+    setData(null);
+    setError("");
+    return;
   }
+
+  try {
+    setLoading(true);
+    setError("");
+
+    const result = await getAnalyticsSummary();
+
+    setData(result);
+  } catch (err) {
+    setError(err.message || "Could not load analytics.");
+  } finally {
+    setLoading(false);
+  }
+}
 
   useEffect(() => {
     loadAnalytics();
@@ -60,17 +66,29 @@ function Analytics() {
     );
   }
 
-  if (error) {
-    return (
-      <main className="analytics-page">
-        <div className="analytics-container">
-          <p className="error-message">
-            {error}
-          </p>
-        </div>
-      </main>
-    );
-  }
+if (!token) {
+  return (
+    <main className="analytics-page">
+      <div className="analytics-container">
+        <p className="message">
+          Please log in to view your support analytics.
+        </p>
+      </div>
+    </main>
+  );
+}
+
+if (error) {
+  return (
+    <main className="analytics-page">
+      <div className="analytics-container">
+        <p className="error-message">
+          {error}
+        </p>
+      </div>
+    </main>
+  );
+}
 
   return (
     <main className="analytics-page">
