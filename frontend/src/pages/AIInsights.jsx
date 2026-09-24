@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { API_URL } from "../api/config";
 import "./AIInsights.css";
 
-const API_URL = "http://127.0.0.1:8000/api/ai/chat";
+const AI_CHAT_API_URL = `${API_URL}/api/ai/chat`;
 
 function AIInsights() {
   const [messages, setMessages] = useState([
