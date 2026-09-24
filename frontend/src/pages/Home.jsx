@@ -98,43 +98,44 @@ function Home() {
         </p>
       )}
 
-      {!token ? (
-  <div className="message">
-    <p>Please log in to view and manage your support tickets.</p>
-    <Link className="primary-button" to="/login">
-      Log In
-    </Link>
-  </div>
-) : (
-  <>
-    {error && (
-      <p className="error-message">
-        {error}
-      </p>
-    )}
-  </>
-)}
+       {!token ? (
+        <div className="message">
+          <p>Please log in to view and manage your support tickets.</p>
 
-      {!loading &&
-        !error &&
-        tickets.length === 0 && (
-          <p className="message">
-            No tickets found.
-          </p>
-        )}
+          <Link className="primary-button" to="/login">
+            Log In
+          </Link>
+        </div>
+      ) : (
+        <>
+          {error && (
+            <p className="error-message">
+              {error}
+            </p>
+          )}
 
-      {!loading &&
-        !error &&
-        tickets.length > 0 && (
-          <div className="ticket-list">
-            {tickets.map((ticket) => (
-              <TicketCard
-                key={ticket.ticket_id}
-                ticket={ticket}
-              />
-            ))}
-          </div>
-        )}
+          {!loading &&
+            !error &&
+            tickets.length === 0 && (
+              <p className="message">
+                No tickets found.
+              </p>
+            )}
+
+          {!loading &&
+            !error &&
+            tickets.length > 0 && (
+              <div className="ticket-list">
+                {tickets.map((ticket) => (
+                  <TicketCard
+                    key={ticket.ticket_id}
+                    ticket={ticket}
+                  />
+                ))}
+              </div>
+            )}
+        </>
+      )}
     </div>
   );
 }
