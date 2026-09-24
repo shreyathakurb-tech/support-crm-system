@@ -12,7 +12,9 @@ export async function getTickets(status = "", search = "") {
   }
 
   const queryString = params.toString();
-  const url = queryString ? `${API_URL}?${queryString}` : API_URL;
+  const url = queryString
+  ? `${TICKETS_API_URL}?${queryString}`
+  : TICKETS_API_URL;
 
   const response = await fetch(url);
 
@@ -24,7 +26,7 @@ export async function getTickets(status = "", search = "") {
 }
 
 export async function getTicket(ticketId) {
-  const response = await fetch(`${API_URL}/${ticketId}`);
+  const response = await fetch(`${TICKETS_API_URL}/${ticketId}`);
 
   if (!response.ok) {
     throw new Error("Failed to fetch ticket");
@@ -34,7 +36,7 @@ export async function getTicket(ticketId) {
 }
 
 export async function createTicket(ticketData) {
-  const response = await fetch(API_URL, {
+  const response = await fetch(TICKETS_API_URL, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -76,7 +78,7 @@ export async function updateTicket(ticketId, ticketData) {
     payload.notes = ticketData.notes.trim();
   }
 
-  const response = await fetch(`${API_URL}/${ticketId}`, {
+  const response = await fetch(`${TICKETS_API_URL}/${ticketId}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",

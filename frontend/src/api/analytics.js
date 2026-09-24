@@ -5,7 +5,7 @@ export async function getAnalyticsSummary() {
   const token = localStorage.getItem("resolvehub_token");
 
   const response = await fetch(
-    `${API_URL}/summary`,
+    `${ANALYTICS_API_URL}/summary`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
