@@ -112,23 +112,6 @@ function Home() {
         {error}
       </p>
     )}
-
-    {!loading && !error && tickets.length === 0 && (
-      <p className="message">
-        No tickets found.
-      </p>
-    )}
-
-    {!loading && !error && tickets.length > 0 && (
-      <div className="ticket-list">
-        {tickets.map((ticket) => (
-          <TicketCard
-            key={ticket.ticket_id}
-            ticket={ticket}
-          />
-        ))}
-      </div>
-    )}
   </>
 )}
 
