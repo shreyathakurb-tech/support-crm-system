@@ -1,9 +1,9 @@
 from typing import Optional
 
-from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi import APIRouter, Depends, Header, HTTPException, Query
 from sqlalchemy import or_
 from sqlalchemy.orm import Session, joinedload
-
+from auth.security import decode_access_token
 from database import get_db
 from model import Note, Ticket
 from schemas import (
@@ -47,15 +47,43 @@ def create_ticket(ticket_data: TicketCreate, db: Session = Depends(get_db)):
 def list_tickets(
     status: Optional[str] = Query(default=None),
     search: Optional[str] = Query(default=None),
+    authorization: Optional[str] = Header(default=None),
     db: Session = Depends(get_db),
 ):
+    # Require login
+    if not authorization or not authorization.startswith("Bearer "):
+        raise HTTPException(
+            status_code=401,
+            detail="Authentication required",
+        )
+
+    token = authorization.split(" ", 1)[1]
+    payload = decode_access_token(token)
+
+    if not payload:
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid or expired token",
+        )
+
+    user_email = payload.get("email")
+    user_role = payload.get("role")
+
     query = db.query(Ticket)
+
+    # Customers can see ONLY their own tickets.
+    # Admins can see all tickets.
+    if user_role != "admin":
+        query = query.filter(
+            Ticket.customer_email == user_email
+        )
 
     if status:
         query = query.filter(Ticket.status == status)
 
     if search:
         search_text = f"%{search}%"
+
         query = query.filter(
             or_(
                 Ticket.ticket_id.ilike(search_text),
@@ -66,9 +94,13 @@ def list_tickets(
             )
         )
 
-    tickets = query.order_by(Ticket.created_at.desc()).all()
-    return tickets
+    tickets = (
+        query
+        .order_by(Ticket.created_at.desc())
+        .all()
+    )
 
+    return tickets
 
 @router.get("/{ticket_id}", response_model=TicketDetailResponse)
 def get_ticket(ticket_id: str, db: Session = Depends(get_db)):
